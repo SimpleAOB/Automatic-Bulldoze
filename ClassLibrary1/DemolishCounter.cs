@@ -21,21 +21,31 @@ namespace BulldozerMod
         static int TotalBurnedDemolished_Count = 0;
 
         static List<DemolishEvent> DemolishEvents = new List<DemolishEvent>();
-        
-        public static void UpdateTooltip()
+        static UIComponent BulldozerButton;
+        static bool Initialized;
+
+        public static bool ToolTipInit()
         {
+            if (Initialized) return true;
             UIView uiv = GameObject.FindObjectOfType<UIView>();
             if (uiv == null)
             {
                 DebugOutputPanel.AddMessage(ColossalFramework.Plugins.PluginManager.MessageType.Message, "ui null");
-                return;
+                return false;
             }
-            UIComponent BulldozerButton = uiv.FindUIComponent("BulldozerButton");
+            BulldozerButton = UIView.Find("BulldozerButton");
             if (BulldozerButton == null)
             {
                 DebugOutputPanel.AddMessage(ColossalFramework.Plugins.PluginManager.MessageType.Message, "Button null");
-                return;
+                return false;
             }
+            Initialized = true;
+            return true;
+        }
+
+        public static void UpdateTooltip()
+        {
+            if (!ToolTipInit()) return;
             //
             //Use panel interface instead
             if (BulldozerPanelInterface.b_demolishAbandoned || BulldozerPanelInterface.b_demolishBurned)

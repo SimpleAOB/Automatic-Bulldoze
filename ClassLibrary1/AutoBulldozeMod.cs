@@ -25,6 +25,7 @@ namespace BulldozerMod
     {
         public static AudioGroup nullAudioGroup;
         bool m_initialized = false;
+        Timer ToolTipUpdateTimer = new Timer();
 
         public bool init()
         {
@@ -35,6 +36,8 @@ namespace BulldozerMod
             GameObject obDemolishAbandoned = new GameObject();
             UIButton checkDemolishAbandoned = obDemolishAbandoned.AddComponent<UIButton>();
 
+            ToolTipUpdateTimer.Interval = 5000;
+            ToolTipUpdateTimer.Elapsed += ToolTipUpdateTimer_Elapsed;
             checkDemolishAbandoned.transform.parent = bullBar.transform;
             checkDemolishAbandoned.transformPosition = new Vector3(-1.0f, 0.0f);
             checkDemolishAbandoned.text = "Abandoned";
@@ -44,6 +47,13 @@ namespace BulldozerMod
             DebugOutputPanel.AddMessage(ColossalFramework.Plugins.PluginManager.MessageType.Message, "[Autobulldoze] Initialized");
             m_initialized = true;
             return true;
+        }
+
+        private void ToolTipUpdateTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            SimulationManager simManager = Singleton<SimulationManager>.instance;
+            if (simManager.SimulationPaused) return;
+            DemolishCounter.UpdateTooltip();
         }
 
         public override void OnCreated(IThreading threading)
@@ -146,7 +156,6 @@ namespace BulldozerMod
                 demolishBuilding(i, true);
                 Building build = buildManager.m_buildings.m_buffer[i];
             }
-            DemolishCounter.UpdateTooltip();
         }
     }
 }
