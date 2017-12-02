@@ -38,6 +38,7 @@ namespace BulldozerMod
 
             ToolTipUpdateTimer.Interval = 5000;
             ToolTipUpdateTimer.Elapsed += ToolTipUpdateTimer_Elapsed;
+            ToolTipUpdateTimer.Start();
             checkDemolishAbandoned.transform.parent = bullBar.transform;
             checkDemolishAbandoned.transformPosition = new Vector3(-1.0f, 0.0f);
             checkDemolishAbandoned.text = "Abandoned";
@@ -55,7 +56,7 @@ namespace BulldozerMod
             if (simManager.SimulationPaused) return;
             DemolishCounter.UpdateTooltip();
         }
-
+        
         public override void OnCreated(IThreading threading)
         {
             m_initialized = false;
