@@ -1,0 +1,14 @@
+C:\Users\SimpleAOB\AppData\Local\Colossal Order\Cities_Skylines\Addons\BulldozerMod\Source\Bulldozer\Bulldozer\ClassLibrary1\bin\Debug\BulldozerMod.dll
+C:\Users\SimpleAOB\AppData\Local\Colossal Order\Cities_Skylines\Addons\BulldozerMod\Source\Bulldozer\Bulldozer\ClassLibrary1\bin\Debug\BulldozerMod.pdb
+C:\Users\SimpleAOB\AppData\Local\Colossal Order\Cities_Skylines\Addons\BulldozerMod\Source\Bulldozer\Bulldozer\ClassLibrary1\bin\Debug\Assembly-CSharp-firstpass.dll
+C:\Users\SimpleAOB\AppData\Local\Colossal Order\Cities_Skylines\Addons\BulldozerMod\Source\Bulldozer\Bulldozer\ClassLibrary1\bin\Debug\Assembly-CSharp.dll
+C:\Users\SimpleAOB\AppData\Local\Colossal Order\Cities_Skylines\Addons\BulldozerMod\Source\Bulldozer\Bulldozer\ClassLibrary1\bin\Debug\ColossalManaged.dll
+C:\Users\SimpleAOB\AppData\Local\Colossal Order\Cities_Skylines\Addons\BulldozerMod\Source\Bulldozer\Bulldozer\ClassLibrary1\bin\Debug\ICities.dll
+C:\Users\SimpleAOB\AppData\Local\Colossal Order\Cities_Skylines\Addons\BulldozerMod\Source\Bulldozer\Bulldozer\ClassLibrary1\bin\Debug\ICSharpCode.SharpZipLib.dll
+C:\Users\SimpleAOB\AppData\Local\Colossal Order\Cities_Skylines\Addons\BulldozerMod\Source\Bulldozer\Bulldozer\ClassLibrary1\bin\Debug\PopsApiWrapper.dll
+C:\Users\SimpleAOB\AppData\Local\Colossal Order\Cities_Skylines\Addons\BulldozerMod\Source\Bulldozer\Bulldozer\ClassLibrary1\bin\Debug\UnityEngine.dll
+C:\Users\SimpleAOB\AppData\Local\Colossal Order\Cities_Skylines\Addons\BulldozerMod\Source\Bulldozer\Bulldozer\ClassLibrary1\bin\Debug\UnityEngine.Networking.dll
+C:\Users\SimpleAOB\AppData\Local\Colossal Order\Cities_Skylines\Addons\BulldozerMod\Source\Bulldozer\Bulldozer\ClassLibrary1\bin\Debug\UnityEngine.UI.dll
+C:\Users\SimpleAOB\AppData\Local\Colossal Order\Cities_Skylines\Addons\BulldozerMod\Source\Bulldozer\Bulldozer\ClassLibrary1\obj\Debug\BulldozerMod.csprojResolveAssemblyReference.cache
+C:\Users\SimpleAOB\AppData\Local\Colossal Order\Cities_Skylines\Addons\BulldozerMod\Source\Bulldozer\Bulldozer\ClassLibrary1\obj\Debug\BulldozerMod.dll
+C:\Users\SimpleAOB\AppData\Local\Colossal Order\Cities_Skylines\Addons\BulldozerMod\Source\Bulldozer\Bulldozer\ClassLibrary1\obj\Debug\BulldozerMod.pdb
