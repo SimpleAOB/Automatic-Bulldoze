@@ -2,6 +2,10 @@
 
 This is a continuation of the awesome mode made by Sadler.
 
-As of right now, the only changes made are removal of unused code and adding of a little tooltip indictator to tell how many buildings are being affected
+Changes so far:
+* Tooltip information on buildings being demolished
+* Demolishion doesn't occur if the simulation is paused
+* Removed unused code
+
 
 ![Tooltip](https://i.imgur.com/VbXm4tf.png)
