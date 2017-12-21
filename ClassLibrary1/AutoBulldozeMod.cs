@@ -56,7 +56,7 @@ namespace BulldozerMod
             if (simManager.SimulationPaused) return;
             DemolishCounter.UpdateTooltip();
         }
-        
+
         public override void OnCreated(IThreading threading)
         {
             m_initialized = false;
@@ -88,30 +88,34 @@ namespace BulldozerMod
         }
 
 
-        private void DeleteBuildingImpl(ushort building, bool showEffect, DemolishCounter.DemolishType DemolishType)
+        private void DeleteBuildingImpl(ushort building, bool showEffect, DemolishCounter.DemolishType DemolishType, bool IsManual)
         {
-            if (Singleton<BuildingManager>.instance.m_buildings.m_buffer[(int)building].m_flags != Building.Flags.None)
+            BuildingManager buildManager = Singleton<BuildingManager>.instance;
+            if (building <= buildManager.m_buildings.m_buffer.Length)
             {
-                BuildingManager instance = Singleton<BuildingManager>.instance;
-                BuildingInfo info = instance.m_buildings.m_buffer[(int)building].Info;
-                if (info.m_buildingAI.CheckBulldozing(building, ref instance.m_buildings.m_buffer[(int)building]) == ToolBase.ToolErrors.None)
+                if (Singleton<BuildingManager>.instance.m_buildings.m_buffer[building].m_flags != Building.Flags.None)
                 {
-                    int buildingRefundAmount = this.GetBuildingRefundAmount(building);
-                    if (buildingRefundAmount != 0)
-                        Singleton<EconomyManager>.instance.AddResource(EconomyManager.Resource.RefundAmount, buildingRefundAmount, info.m_class);
-                    Vector3 pos = instance.m_buildings.m_buffer[(int)building].m_position;
-                    float angle = instance.m_buildings.m_buffer[(int)building].m_angle;
-                    int length = instance.m_buildings.m_buffer[(int)building].Length;
-                    instance.ReleaseBuilding(building);
-                    DemolishCounter.AddToCount(DemolishType, 1);
-                    if (info.m_class.m_service > ItemClass.Service.Office)
-                        Singleton<CoverageManager>.instance.CoverageUpdated(info.m_class.m_service, info.m_class.m_subService, info.m_class.m_level);
-                    if (showEffect) DispatchAutobulldozeEffect(info, pos, angle, length);
+                    BuildingManager instance = Singleton<BuildingManager>.instance;
+                    BuildingInfo info = instance.m_buildings.m_buffer[(int)building].Info;
+                    if (info.m_buildingAI.CheckBulldozing(building, ref instance.m_buildings.m_buffer[(int)building]) == ToolBase.ToolErrors.None)
+                    {
+                        int buildingRefundAmount = this.GetBuildingRefundAmount(building);
+                        if (buildingRefundAmount != 0)
+                            Singleton<EconomyManager>.instance.AddResource(EconomyManager.Resource.RefundAmount, buildingRefundAmount, info.m_class);
+                        Vector3 pos = instance.m_buildings.m_buffer[(int)building].m_position;
+                        float angle = instance.m_buildings.m_buffer[(int)building].m_angle;
+                        int length = instance.m_buildings.m_buffer[(int)building].Length;
+                        instance.ReleaseBuilding(building);
+                        DemolishCounter.AddToCount(DemolishType, IsManual ? 0 : 1);
+                        if (info.m_class.m_service > ItemClass.Service.Office)
+                            Singleton<CoverageManager>.instance.CoverageUpdated(info.m_class.m_service, info.m_class.m_subService, info.m_class.m_level);
+                        if (showEffect) DispatchAutobulldozeEffect(info, pos, angle, length);
+                    }
                 }
             }
         }
 
-        public void demolishBuilding(ushort index, bool isAuto)
+        public void demolishBuilding(ushort index, bool IsManual)
         {
             SimulationManager simManager = Singleton<SimulationManager>.instance;
             BuildingManager buildManager = Singleton<BuildingManager>.instance;
@@ -141,7 +145,7 @@ namespace BulldozerMod
 
             if (needToDemolish)
             {
-                DeleteBuildingImpl(index, true, DemolishType);
+                DeleteBuildingImpl(index, true, DemolishType, IsManual);
                 return;
             }
         }
@@ -154,8 +158,27 @@ namespace BulldozerMod
             BuildingManager buildManager = Singleton<BuildingManager>.instance;
             for (ushort i = (ushort)(simManager.m_currentTickIndex % 1000); i < buildManager.m_buildings.m_buffer.Length; i += 1000)
             {
-                demolishBuilding(i, true);
+                demolishBuilding(i, false);
                 Building build = buildManager.m_buildings.m_buffer[i];
+            }
+        }
+        public void ManualDemolishAll()
+        {
+            BuildingManager buildManager = Singleton<BuildingManager>.instance;
+            for (int i = 0; i < buildManager.m_buildings.m_buffer.Length; i++)
+            {
+                Building b = buildManager.m_buildings.m_buffer[i];
+                if (((b.m_flags & Building.Flags.BurnedDown) != Building.Flags.None) || ((b.m_flags & Building.Flags.Abandoned) != Building.Flags.None) && !((b.m_flags & Building.Flags.Deleted) != Building.Flags.None))
+                {
+                    try
+                    {
+                        DeleteBuildingImpl((ushort)i, false, DemolishCounter.DemolishType.Null, false);
+                    }
+                    catch (ModException e)
+                    {
+                        DebugOutputPanel.AddMessage(ColossalFramework.Plugins.PluginManager.MessageType.Error, e.StackTrace);
+                    }
+                }
             }
         }
     }
